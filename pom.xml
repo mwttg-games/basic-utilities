@@ -15,6 +15,10 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- Dependencies -->
         <logback.version>1.2.11</logback.version>
+        <!-- Dependencies for Tests -->
+        <assertJ.version>3.22.0</assertJ.version>
+        <mockito.version>4.5.1</mockito.version>
+        <testng.version>7.6.0</testng.version>
         <!-- Plugins -->
         <checkstyle.maven.plugin.version>3.1.2</checkstyle.maven.plugin.version>
         <checkstyle.version>10.2</checkstyle.version>
@@ -27,6 +31,25 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
+        </dependency>
+        <!-- Dependencies for Tests -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertJ.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
