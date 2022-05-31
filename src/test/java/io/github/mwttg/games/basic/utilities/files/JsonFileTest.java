@@ -1,8 +1,11 @@
 package io.github.mwttg.games.basic.utilities.files;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.testng.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import org.testng.annotations.Test;
 
 public class JsonFileTest {
@@ -48,6 +51,26 @@ public class JsonFileTest {
   @Test(expectedExceptions = AssertionError.class)
   public void testReadFromResource_resultTypeIsNull() {
     JsonFile.readFromResource("/file/does/not/exist.json", null);
+  }
+
+  @Test
+  public void testWriteTo_valid() throws IOException {
+    final var tempFile = File.createTempFile("mwttg-temp-file-basic-utils", ".json");
+    tempFile.deleteOnExit();
+
+    final var item = expected();
+    JsonFile.writeTo(item, tempFile);
+
+    final var expectedFile = JsonFileTest.class.getResource("/files/valid-jsonfile.json").getFile();
+    final var expected = new File(expectedFile);
+    assertThat(Files.mismatch(Paths.get(expected.toURI()), Paths.get(tempFile.toURI()))).isEqualTo(-1);
+  }
+
+  @Test(expectedExceptions = AssertionError.class)
+  public void testWriteTo_itemIsNull() throws IOException {
+    final var tempFile = File.createTempFile("mwttg-temp-file-basic-utils", ".json");
+    tempFile.deleteOnExit();
+    JsonFile.writeTo(null, tempFile);
   }
 
   private JsonTestObject expected() {

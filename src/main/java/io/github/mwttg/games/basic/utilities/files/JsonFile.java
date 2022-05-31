@@ -61,4 +61,21 @@ public final class JsonFile {
       throw new RuntimeException(ioException);
     }
   }
+
+  /**
+   * This function takes an item and creates a file where the content of this item is stored as JSON.
+   *
+   * @param item the item which should be serialized to JSON
+   * @param file the file which will be created (with the content of the item)
+   * @param <T>  the type of the item
+   */
+  public static <T> void writeTo(final T item, final File file) {
+    assert item != null : "item which should be serialized to JSON was null;";
+    try {
+      MAPPER.writerWithDefaultPrettyPrinter().writeValue(file, item);
+    } catch (final IOException ioException) {
+      LOG.error("Error writing json file '{}'. The exception was: ", file.getAbsolutePath());
+      throw new RuntimeException(ioException);
+    }
+  }
 }

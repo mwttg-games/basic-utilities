@@ -1,7 +1,7 @@
 {
-  "value0": "<-- does not exist",
-  "value1": "a-string",
-  "value2": 1234,
-  "value3": 1.0,
-  "value4": true
+  "value0" : "<-- does not exist",
+  "value1" : "a-string",
+  "value2" : 1234,
+  "value3" : 1.0,
+  "value4" : true
 }
