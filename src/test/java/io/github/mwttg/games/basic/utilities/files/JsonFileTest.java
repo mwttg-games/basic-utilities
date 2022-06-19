@@ -2,6 +2,7 @@ package io.github.mwttg.games.basic.utilities.files;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,26 +11,51 @@ import org.testng.annotations.Test;
 
 public class JsonFileTest {
 
+  private final TypeReference<JsonTestObject> type = new TypeReference<>() {
+  };
+
   @Test
-  public void testReadFrom_valid() {
+  public void testReadFrom_valid_withResultClass() {
     final var filename = JsonFileTest.class.getResource("/files/valid-jsonfile.json").getFile();
     final var actual = JsonFile.readFrom(filename, JsonTestObject.class);
     assertThat(actual).isEqualTo(expected());
   }
 
   @Test(expectedExceptions = RuntimeException.class)
-  public void testReadFrom_fileDoesNotExist() {
+  public void testReadFrom_fileDoesNotExist_withResultClass() {
     JsonFile.readFrom("/file/does/not/exist.json", JsonTestObject.class);
   }
 
   @Test(expectedExceptions = AssertionError.class)
-  public void testReadFrom_filenameIsNull() {
+  public void testReadFrom_filenameIsNull_withResultClass() {
     JsonFile.readFrom(null, JsonTestObject.class);
   }
 
   @Test(expectedExceptions = AssertionError.class)
-  public void testReadFrom_resultTypeIsNull() {
-    JsonFile.readFrom("/file/does/not/exist.json", null);
+  public void testReadFrom_resultTypeIsNull_withResultClass() {
+    JsonFile.readFrom("/file/does/not/exist.json", (Class<Object>) null);
+  }
+
+  @Test
+  public void testReadFrom_valid_withResultType() {
+    final var filename = JsonFileTest.class.getResource("/files/valid-jsonfile.json").getFile();
+    final var actual = JsonFile.readFrom(filename, type);
+    assertThat(actual).isEqualTo(expected());
+  }
+
+  @Test(expectedExceptions = RuntimeException.class)
+  public void testReadFrom_fileDoesNotExist_withResultType() {
+    JsonFile.readFrom("/file/does/not/exist.json", type);
+  }
+
+  @Test(expectedExceptions = AssertionError.class)
+  public void testReadFrom_filenameIsNull_withResultType() {
+    JsonFile.readFrom(null, type);
+  }
+
+  @Test(expectedExceptions = AssertionError.class)
+  public void testReadFrom_resultTypeIsNull_withResultType() {
+    JsonFile.readFrom("/file/does/not/exist.json", (TypeReference<Object>) null);
   }
 
   @Test

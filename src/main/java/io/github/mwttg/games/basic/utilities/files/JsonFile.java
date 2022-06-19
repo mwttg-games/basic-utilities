@@ -1,5 +1,6 @@
 package io.github.mwttg.games.basic.utilities.files;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
@@ -19,14 +20,37 @@ public final class JsonFile {
    * The checked Exceptions (like IOExceptions) are converted to unchecked Exceptions (RuntimeExceptions).
    *
    * @param filename the path and name of the JSON file
-   * @param clazz    the result type
+   * @param clazz    the result class
    * @return deserialized JSON content
    */
   public static <T> T readFrom(final String filename, final Class<T> clazz) {
     assert filename != null : "filename was null";
-    assert clazz != null : "result type was null";
+    assert clazz != null : "result class was null";
     LOG.info("Reading json file from: '{}'", filename);
     return read(filename, clazz);
+  }
+
+  /**
+   * This function reads a JSON file and returns an object which represents the content.
+   * The checked Exceptions (like IOExceptions) are converted to unchecked Exceptions (RuntimeExceptions).
+   *
+   * @param filename the path and name of the JSON file
+   * @param type    the result type
+   * @return deserialized JSON content
+   */
+  public static <T> T readFrom(final String filename, final TypeReference<T> type) {
+    assert filename != null : "filename was null";
+    assert type != null : "result type was null";
+    LOG.info("Reading json file from: '{}'", filename);
+    try {
+      return MAPPER.readValue(new File(filename), type);
+    } catch (final IOException ioException) {
+      LOG.error("Error reading json file '{}' and mapping it to '{}'. The Exception was: ",
+          filename,
+          type,
+          ioException);
+      throw new RuntimeException(ioException);
+    }
   }
 
   /**
