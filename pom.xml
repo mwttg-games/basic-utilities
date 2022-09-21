@@ -15,6 +15,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <!-- Dependencies -->
         <jackson.version>2.13.3</jackson.version>
+        <joml-primitives.version>1.10.0</joml-primitives.version>
         <logback.version>1.2.11</logback.version>
         <!-- Dependencies for Tests -->
         <assertJ.version>3.22.0</assertJ.version>
@@ -33,6 +34,12 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
+        </dependency>
+        <!-- JOML primitives -->
+        <dependency>
+            <groupId>org.joml</groupId>
+            <artifactId>joml-primitives</artifactId>
+            <version>${joml-primitives.version}</version>
         </dependency>
         <!-- JSON -->
         <dependency>

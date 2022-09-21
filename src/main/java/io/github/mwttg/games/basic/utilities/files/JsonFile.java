@@ -2,8 +2,10 @@ package io.github.mwttg.games.basic.utilities.files;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import java.io.File;
 import java.io.IOException;
+import org.joml.primitives.Rectanglef;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,12 @@ public final class JsonFile {
 
   private static final Logger LOG = LoggerFactory.getLogger(JsonFile.class);
   private static final ObjectMapper MAPPER = new ObjectMapper();
+
+  static {
+    final var module = new SimpleModule();
+    module.addKeyDeserializer(Rectanglef.class, new RectanglefKeyDeserializer());
+    MAPPER.registerModule(module);
+  }
 
   private JsonFile() {
   }
@@ -35,7 +43,7 @@ public final class JsonFile {
    * The checked Exceptions (like IOExceptions) are converted to unchecked Exceptions (RuntimeExceptions).
    *
    * @param filename the path and name of the JSON file
-   * @param type    the result type
+   * @param type     the result type
    * @return deserialized JSON content
    */
   public static <T> T readFrom(final String filename, final TypeReference<T> type) {
