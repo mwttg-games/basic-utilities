@@ -17,6 +17,7 @@ public final class JsonFile {
   static {
     final var module = new SimpleModule();
     module.addKeyDeserializer(Rectanglef.class, new RectanglefKeyDeserializer());
+    module.addDeserializer(Rectanglef.class, new RectanglefDeserializer());
     MAPPER.registerModule(module);
   }
 
