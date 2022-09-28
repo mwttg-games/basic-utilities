@@ -22,7 +22,14 @@ public class RectanglefDeserializer extends StdDeserializer<Rectanglef> {
   @Override
   public Rectanglef deserialize(final JsonParser parser, final DeserializationContext context) throws IOException {
     final var node = (JsonNode) parser.getCodec().readTree(parser);
-    final var text = node.textValue();
+
+    // looks like it makes a difference if the rectangle is part of a Map (as value)
+    // or if it is a normal object
+    if (node.textValue() != null) {
+      return RectanglefUtilities.parse(node.textValue());
+    }
+
+    final var text = node.get("zone").textValue();
     return RectanglefUtilities.parse(text);
   }
 }
