@@ -17,7 +17,7 @@ public class RectanglefDeserializer extends StdDeserializer<Rectanglef> {
     super(vc);
   }
 
-  // Well... if we are using a custom deserializer for a Rectangle4f in a Map as Key, we also can use
+  // Well... if we are using a custom deserializer for a Rectanglef in a Map as Key, we also can use
   // this representation for a value (instead the standard default ("minX" : .. , "minY" .. , ....)
   @Override
   public Rectanglef deserialize(final JsonParser parser, final DeserializationContext context) throws IOException {
